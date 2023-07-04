@@ -1,0 +1,29 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+  springapp:
+    image: springrestapp
+    build: .
+    container_name: SpringRestApiApp
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+      MYSQL_HOST: mysqlapp
+      MYSQL_USER: root
+      MYSQL_PASSWORD: admin
+      MYSQL_PORT: 3306
+
+
+  mysqldb:
+    image: mysql
+    container_name: mysqlapp
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: users
